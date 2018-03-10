@@ -157,12 +157,15 @@ module.exports = function (__secret = '', __user = '', __minvalue = 5000) {
         },
         "language": "javascript"
     };
-
+//init();
+function init(){
     init_db('centerbalance', __design_centerbalance);
     init_db('falurelist', __design_event_list);
     init_db('phonebalance', __design_phonebalance);
     init_db('retrylist', __design_event_list);
     init_db('successlist', __design_event_list);
+}
+    
 
     // var phone = '2055051550';
     // var topupvalue = 5000;
