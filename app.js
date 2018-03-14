@@ -2,7 +2,7 @@ const WebSocket = require('ws');
 const express = require('express');
 const http = require('http');
 const url = require('url');
-const ltc = require("./ltcservice")('ea9uZEit0E7sXPeYoCJZDZWZVT+o10ZthvuldL8cJtQ=', 'ITCENTER',5000);
+const ltc = require("./ltcservice")('ea9uZEit0E7sXPeYoCJZDZWZVT+o10ZthvuldL8cJtQ=', 'ITCENTER',0);
 const app = express();
 const path=require('path');
 const Q=require('q');
@@ -66,33 +66,51 @@ var _client={
     logintoken:'',
     logintime:'',
     loginip:'',
-    prefix:'',
+    prefix:'gij',
     data:{
         users:{},
         message:{},
         command:''
     }
 }
-function topup(client){
-    phone=client.data.topup.phonenumber;
-    value=client.data.topup.topupvalue;
-    ltc.directTopup(phone,topupvalue).then(res=>{
-        console.log("topup result");
-        console.log(res);
+function topup(value,phone,resp){
+    ltc.directTopup(phone,value).then(res=>{
+        resp.send(res)
     }).catch((err)=>{
-        console.log(JSON.stringify(err));
+        resp.send(err);
     });
 
+}
+function sendsms(content,phonenumber,resp){
+    ltc.sendSMS(phonenumber,content,'ITCENTER').then((res)=>{
+        console.log(JSON.stringify(res));
+        resp.send(res);
+    }).catch((err)=>{
+        console.log(err);
+        resp.send(err);
+    });
 }
 function directTopup(){
 
 }
-function checkCenterBalance(){
-
+function checkCenterBalance(resp){
+    ltc.checkCenterBalance().then((res)=>{
+        ///console.log(res);
+        resp.send(res);
+    }).catch((err)=>{
+        //console.log(JSON.stringify(err));
+        resp.send(err);
+    });
 }
-function checkPhoneBalance(){
-
+function checkPhoneBalance(phone,username,sender,resp){
+    ltc.checkPhoneBalance(phone,username,sender).then((res)=>{
+        resp.send(res);
+    }).catch((err)=>{
+        resp.send(err);
+    });
 }
+
+
 function TopupResult(){
 
 }
@@ -115,17 +133,25 @@ function commandReader(client){
         case 'heartbeat':
             
             break;
-    
+        case 'send-sms':
+            sendsms(client.content,client.phone,client.resp);
+            break;
         case 'topup':
+            topup(client.topup,client.phone,client.resp);
             break;
         case 'direct-topup':
             break;
         case 'check-center-balance':
+            checkCenterBalance(client.resp);
             break;
         case 'check-balance':
+            checkPhoneBalance(client.phone,client.username,client.sender,client.resp);
             break;
         case 'topup-history':
             break;
+        default :
+            deferred.reject('ERROR NO COMMAND');
+        break;
     }
     else{
         deferred.reject(isValid);
@@ -144,6 +170,7 @@ wss.on('connection', function connection(ws, req) {
     ws.on('pong', heartbeat);
     ws.on('message', function incoming(data) {
         //console.log(data); 
+        data.resp=ws;
         commandReader(data).then(res=>{
             setTimeout(function timeout() {
                 data.clientip=ip;// need to handle when IP changed
