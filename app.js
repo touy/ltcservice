@@ -61,6 +61,35 @@ const wss = new WebSocket.Server({server
 // }).catch((err)=>{
 //     console.log(JSON.stringify(err));
 // });
+ltc.checkPhoneBalance('2055516321','IMEI','TEST').then((res)=>{
+    console.log(res);
+}).catch((err)=>{
+    console.log(JSON.stringify(err));
+    console.log('');
+});
+ltc.checkPhoneBalancePOSTPAID('2055516321','IMEI','TEST').then((res)=>{
+    console.log(res);
+}).catch((err)=>{
+    console.log(JSON.stringify(err));
+    console.log('');
+});
+ltc.checkPhoneBalancePSTN('2055516321','IMEI','TEST').then((res)=>{
+    console.log(res);
+}).catch((err)=>{
+    console.log(JSON.stringify(err));
+    console.log('');
+});
+ltc.checkPhoneBalanceInternet('2055516321','IMEI','TEST').then((res)=>{
+    console.log(res);
+}).catch((err)=>{
+    console.log(JSON.stringify(err));
+    console.log('');
+});
+
+
+
+
+
 var _client={
     username:'',
     logintoken:'',
@@ -146,6 +175,15 @@ function commandReader(client){
             break;
         case 'check-balance':
             checkPhoneBalance(client.phone,client.username,client.sender,client.resp);
+            break;
+        case 'check-post-balance':
+            checkPostPaid(client.phone,client.username,client.sender,client.resp);
+            break;
+        case 'check-PSTN-balance':
+            checkPSTN(client.phone,client.username,client.sender,client.resp);
+            break;
+        case 'check-internet-balance':
+            checkInternet(client.phone,client.username,client.sender,client.resp);
             break;
         case 'topup-history':
             break;

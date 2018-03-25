@@ -655,19 +655,7 @@ function init(){
         }
         return deferred.promise;
     }
-    module.sendSMSInternet=function(phone,message,header){
-        var deferred=Q.defer();
-        try {
-            ltc.sendSMSLTCInternet(phone,message,header).then((res)=>{
-                deferred.resolve(res);
-                }).catch((err)=>{
-                    deferred.reject(err);
-                });   
-        } catch (error) {
-            deferred.reject(error);
-        }        
-        return deferred.promise;
-    }
+
     module.paymentInternet=function(phone,value){
         var deferred=Q.defer();
         try {
@@ -803,19 +791,7 @@ function init(){
         }
         return deferred.promise;
     }
-    module.sendSMSPSTN=function(phone,message,header){
-        var deferred=Q.defer();
-        try {
-            ltc.sendSMSLTCPSTN(phone,message,header).then((res)=>{
-                deferred.resolve(res);
-                }).catch((err)=>{
-                    deferred.reject(err);
-                });   
-        } catch (error) {
-            deferred.reject(error);
-        }        
-        return deferred.promise;
-    }
+
     module.paymentPSTN=function(phone,value){
         var deferred=Q.defer();
         try {
@@ -951,19 +927,7 @@ function init(){
         }
         return deferred.promise;
     }
-    module.sendSMSPOSTPAID=function(phone,message,header){
-        var deferred=Q.defer();
-        try {
-            ltc.sendSMSLTCPOSTPAID(phone,message,header).then((res)=>{
-                deferred.resolve(res);
-                }).catch((err)=>{
-                    deferred.reject(err);
-                });   
-        } catch (error) {
-            deferred.reject(error);
-        }        
-        return deferred.promise;
-    }
+
     module.paymentPOSTPAID=function(phone,value){
         var deferred=Q.defer();
         try {

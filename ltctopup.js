@@ -282,36 +282,7 @@ module.exports = function (__secret = '', __user = '') {
         });
         return defered.promise;
     }
-    module.sendSMSLTCInternet= function (phone, message, header) {
-        var deferred = Q.defer();
-        m = validatePhone(phone);
-        if (m != "OK")
-            throw new Error(m);
-        var soap = require('soap');
-        var url = 'http://ltcservice.laotel.com:6848/Services.asmx?WSDL';
-        var type = '2';
-        var trans_id = cryptoRandomNumber((Number.MAX_SAFE_INTEGER - 281474976710655), Number.MAX_SAFE_INTEGER);
-        this.ltcEncrypt(phone + message + ltcUser + header).then(function (body) {
-            var args = {
-                message: message,
-                header: header,
-                msisdn: phone,
-                user_id: ltcUser,
-                key: body
-            };
-            soap.createClient(url, function (err, client) {
-                client.SendSMS(args, function (err, result) {
-                    //var res=[];res.push(result);
-                    deferred.resolve(result);
-                    //console.log(result);
-                });
-            });
-        }).catch(function (err) {
-            console.log(err);
-            deferred.reject(err);
-        });
-        return deferred.promise;
-    }
+
     module.queryDetailsLTCInternet= function (startdate, enddate) {
         var deferred = Q.defer();
         if (validateTime(startdate) != "OK" || validateTime(enddate) !== 'OK')
@@ -457,36 +428,7 @@ module.exports = function (__secret = '', __user = '') {
         });
         return defered.promise;
     }
-    module.sendSMSLTCPSTN= function (phone, message, header) {
-        var deferred = Q.defer();
-        m = validatePhone(phone);
-        if (m != "OK")
-            throw new Error(m);
-        var soap = require('soap');
-        var url = 'http://ltcservice.laotel.com:6848/Services.asmx?WSDL';
-        var type = '1';
-        var trans_id = cryptoRandomNumber((Number.MAX_SAFE_INTEGER - 281474976710655), Number.MAX_SAFE_INTEGER);
-        this.ltcEncrypt(phone + message + ltcUser + header).then(function (body) {
-            var args = {
-                message: message,
-                header: header,
-                msisdn: phone,
-                user_id: ltcUser,
-                key: body
-            };
-            soap.createClient(url, function (err, client) {
-                client.SendSMS(args, function (err, result) {
-                    //var res=[];res.push(result);
-                    deferred.resolve(result);
-                    //console.log(result);
-                });
-            });
-        }).catch(function (err) {
-            console.log(err);
-            deferred.reject(err);
-        });
-        return deferred.promise;
-    }
+
     module.queryDetailsLTCPSTN= function (startdate, enddate) {
         var deferred = Q.defer();
         if (validateTime(startdate) != "OK" || validateTime(enddate) !== 'OK')
@@ -632,36 +574,7 @@ module.exports = function (__secret = '', __user = '') {
         });
         return defered.promise;
     }
-    module.sendSMSLTCPOSTPAID= function (phone, message, header) {
-        var deferred = Q.defer();
-        m = validatePhone(phone);
-        if (m != "OK")
-            throw new Error(m);
-        var soap = require('soap');
-        var url = 'http://ltcservice.laotel.com:6848/Services.asmx?WSDL';
-        var type = '0';
-        var trans_id = cryptoRandomNumber((Number.MAX_SAFE_INTEGER - 281474976710655), Number.MAX_SAFE_INTEGER);
-        this.ltcEncrypt(phone + message + ltcUser + header).then(function (body) {
-            var args = {
-                message: message,
-                header: header,
-                msisdn: phone,
-                user_id: ltcUser,
-                key: body
-            };
-            soap.createClient(url, function (err, client) {
-                client.SendSMS(args, function (err, result) {
-                    //var res=[];res.push(result);
-                    deferred.resolve(result);
-                    //console.log(result);
-                });
-            });
-        }).catch(function (err) {
-            console.log(err);
-            deferred.reject(err);
-        });
-        return deferred.promise;
-    }
+
     module.queryDetailsLTCPOSTPAID= function (startdate, enddate) {
         var deferred = Q.defer();
         if (validateTime(startdate) != "OK" || validateTime(enddate) !== 'OK')
