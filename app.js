@@ -6,6 +6,8 @@ const ltc = require("./ltcservice")('ea9uZEit0E7sXPeYoCJZDZWZVT+o10ZthvuldL8cJtQ
 const app = express();
 const path=require('path');
 const Q=require('q');
+const uuidV4 = require('uuid/v4');
+const moment = require('moment-timezone');
 const server = http.createServer(app);
 const wss = new WebSocket.Server({server
 //port: 8081,
@@ -44,7 +46,7 @@ const wss = new WebSocket.Server({server
 //     console.log(JSON.stringify(err));
 // });
 
-// ltc.directTopup('2056706660',5000).then(res=>{
+// ltc.directTopup('2056706660',50000).then(res=>{
 //     console.log("topup result");
 //     console.log(res);
 // }).catch((err)=>{
@@ -61,30 +63,40 @@ const wss = new WebSocket.Server({server
 // }).catch((err)=>{
 //     console.log(JSON.stringify(err));
 // });
-ltc.checkPhoneBalance('2055516321','IMEI','TEST').then((res)=>{
-    console.log(res);
-}).catch((err)=>{
-    console.log(JSON.stringify(err));
-    console.log('');
-});
-ltc.checkPhoneBalancePOSTPAID('2055516321','IMEI','TEST').then((res)=>{
-    console.log(res);
-}).catch((err)=>{
-    console.log(JSON.stringify(err));
-    console.log('');
-});
-ltc.checkPhoneBalancePSTN('2055516321','IMEI','TEST').then((res)=>{
-    console.log(res);
-}).catch((err)=>{
-    console.log(JSON.stringify(err));
-    console.log('');
-});
-ltc.checkPhoneBalanceInternet('2055516321','IMEI','TEST').then((res)=>{
-    console.log(res);
-}).catch((err)=>{
-    console.log(JSON.stringify(err));
-    console.log('');
-});
+// ltc.checkPhoneBalance('2055516321','IMEI','TEST').then((res)=>{
+//     console.log(res);
+// }).catch((err)=>{
+//     console.log(JSON.stringify(err));
+//     console.log('');
+// });
+
+
+// ltc.checkPhoneBalancePOSTPAID('2055051550','IMEI','TEST').then((res)=>{
+//     console.log(res);
+// }).catch((err)=>{
+//     console.log(JSON.stringify(err));
+//     console.log('');
+// });
+
+// ltc.paymentPOSTPAID('2055051550',40000,'test','test target').then((res)=>{
+//     console.log(res);
+// }).catch((err)=>{
+//     console.log(JSON.stringify(err));
+//     console.log('');
+// });
+
+// ltc.checkPhoneBalancePSTN('2055516321','IMEI','TEST').then((res)=>{
+//     console.log(res);
+// }).catch((err)=>{
+//     console.log(JSON.stringify(err));
+//     console.log('');
+// });
+// ltc.checkPhoneBalanceInternet('2055516321','IMEI','TEST').then((res)=>{
+//     console.log(res);
+// }).catch((err)=>{
+//     console.log(JSON.stringify(err));
+//     console.log('');
+// });
 
 
 
@@ -102,13 +114,34 @@ var _client={
         command:''
     }
 }
-function topup(value,phone,resp){
-    ltc.directTopup(phone,value).then(res=>{
+function topup(value,phone,resp,owner,target){
+    ltc.directTopup(phone,value,owner,target).then(res=>{
         resp.send(res)
     }).catch((err)=>{
         resp.send(err);
     });
 
+}
+function paymentPOSTPAID(value,phone,resp,owner,target){
+    ltc.paymentPOSTPAID(phone,value,owner,target).then(res=>{
+        resp.send(res)
+    }).catch((err)=>{
+        resp.send(err);
+    });
+}
+function payementInternet(value,phone,resp,owner,target){
+    ltc.payementInternet(phone,value,owner,target).then(res=>{
+        resp.send(res)
+    }).catch((err)=>{
+        resp.send(err);
+    });
+}
+function paymentPSTN(value,phone,resp,owner,target){
+    ltc.paymentPSTN(phone,value,owner,target).then(res=>{
+        resp.send(res)
+    }).catch((err)=>{
+        resp.send(err);
+    });
 }
 function sendsms(content,phonenumber,resp){
     ltc.sendSMS(phonenumber,content,'ITCENTER').then((res)=>{
@@ -119,9 +152,7 @@ function sendsms(content,phonenumber,resp){
         resp.send(err);
     });
 }
-function directTopup(){
 
-}
 function checkCenterBalance(resp){
     ltc.checkCenterBalance().then((res)=>{
         ///console.log(res);
@@ -138,7 +169,27 @@ function checkPhoneBalance(phone,username,sender,resp){
         resp.send(err);
     });
 }
-
+function checkPostPaid(phone,username,sender,resp){
+    ltc.checkPhoneBalancePOSTPAID(phone,username,sender).then((res)=>{
+        resp.send(res);
+    }).catch((err)=>{
+        resp.send(err);
+    });
+}
+function checkInternet(phone,username,sender,resp){
+    ltc.checkPhoneBalanceInternet(phone,username,sender).then((res)=>{
+        resp.send(res);
+    }).catch((err)=>{
+        resp.send(err);
+    });
+}
+function checkPSTN(phone,username,sender,resp){
+    ltc.checkPhoneBalancePSTN(phone,username,sender).then((res)=>{
+        resp.send(res);
+    }).catch((err)=>{
+        resp.send(err);
+    });
+}
 
 function TopupResult(){
 
@@ -146,44 +197,55 @@ function TopupResult(){
 function topupHistory(){
 
 }
+function convertTZ(fromTZ) {
+    return moment.tz(fromTZ, "Asia/Vientiane").format();
+}
 function validateTopup(client){
+    let invalid=[];
     // check if value is number
     // check if username and login token is valid
     // check if ip OK
     // 
-    return [];
-}
-function commandReader(client){
-    const deferred=Q.defer();
+    
+    if(!client||client == undefined) {
+        invalid.push('client is empty');
+        return invalid;
+    }
 
-    const isValid=validateTopup(client);
+    if(!client.data||client.data == undefined){
+        invalid.push('data is empty');
+        return invalid;
+    } 
+
+    return invalid;
+}
+function commandReader(js){
+    const deferred=Q.defer();
+    const isValid=validateTopup(js.client);
     if(!isValid.length)
-    switch (client.data.command) {
-        case 'heartbeat':
-            
-            break;
+    switch (js.client.data.command) {
         case 'send-sms':
-            sendsms(client.content,client.phone,client.resp);
+            sendsms(js.client.data.sms.content,js.client.data.sms.phone,js.resp);
             break;
         case 'topup':
-            topup(client.topup,client.phone,client.resp);
+            topup(js.client.data.topup.topupvalue,js.client.data.topup.phone,js.resp,js.client.data.topup.username,js.client.data.topup.target);
             break;
         case 'direct-topup':
             break;
         case 'check-center-balance':
-            checkCenterBalance(client.resp);
+            checkCenterBalance(js.resp);
             break;
         case 'check-balance':
-            checkPhoneBalance(client.phone,client.username,client.sender,client.resp);
+            checkPhoneBalance(js.client.data.topup.phone,js.client.data.topup.target,js.client.data.topup.username,js.resp);
             break;
         case 'check-post-balance':
-            checkPostPaid(client.phone,client.username,client.sender,client.resp);
+            checkPostPaid(js.client.data.topup.phone,js.client.data.topup.target,js.client.data.topup.username,js.resp);
             break;
         case 'check-PSTN-balance':
-            checkPSTN(client.phone,client.username,client.sender,client.resp);
+            checkPSTN(js.client.data.topup.phone,js.client.data.topup.target,js.client.data.topup.username,js.resp);
             break;
         case 'check-internet-balance':
-            checkInternet(client.phone,client.username,client.sender,client.resp);
+            checkInternet(js.client.data.topup.phone,js.client.data.topup.target,js.client.data.topup.username,js.resp);
             break;
         case 'topup-history':
             break;
@@ -211,14 +273,22 @@ wss.on('connection', function connection(ws, req) {
         data.resp=ws;
         commandReader(data).then(res=>{
             setTimeout(function timeout() {
-                data.clientip=ip;// need to handle when IP changed
-                data.data.message='OK';
-                data.data.TopupResult=res;
-                ws.send(data);
+                if(!data.client)  data.client={};
+                if(!data.client.gui||data.client.gui==undefined){
+                        data.client.gui=uuidV4();
+                        ws.gui=data.client.gui;
+                }   
+
+                data.client.clientip=ip;// need to handle when IP changed
+                data.client.data.message='OK';
+                data.client.data.TopupResult=res;
+                data.client.lastupdate=convertTZ(new Date());
+                ws.client=data.client;                
+                ws.send(data.client);
             }, 500);
         }).catch(err=>{
-            data.data.message=err;
-            ws.send(data);
+            data.client.data.message=err;
+            ws.send(data.client);
         }) ;
     });
     
@@ -226,9 +296,19 @@ wss.on('connection', function connection(ws, req) {
 function noop() {}
 
 function heartbeat() {
-  this.isAlive = true;
-  console.log('HEART BEAT');
-  this.send('Heart beat OK');
+    let startDate = moment(this.client.lastupdate)
+    let endDate = moment(convertTZ(new Date()));
+    const timeout = endDate.diff(startDate, 'seconds'); 
+    if(this.gui!=this.client.gui){
+        this.isAlive=false;
+        return;
+    }
+    if(timeout>60*3)
+        this.isAlive=false;
+    else
+        this.isAlive = true;
+    console.log('HEART BEAT');
+    this.send(this.client);
 }
 const interval = setInterval(function ping() {
     wss.clients.forEach(function each(ws) {
@@ -237,7 +317,7 @@ const interval = setInterval(function ping() {
       ws.isAlive = false;
       ws.ping(noop);
     });
-  }, 30000);
+  }, 30000);// set 60 seconds 
 
   server.listen(8081, function listening() {
     console.log('Listening on %d', server.address().port);

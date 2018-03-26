@@ -419,12 +419,12 @@ function init(){
         }
         return deferred.promise;
     }
-    module.directTopup = function (phone, topupvalue,owner) {
+    module.directTopup = function (phone, topupvalue,owner,target) {
         var deferred = Q.defer();
         var db=create_db('phonebalance');
         try {
-            var owner='';
-            var target='';
+            // var owner='';
+            // var target='';
             console.log('Here');
             if(err=phoneValidator.validate(phone, {
                 list: true
@@ -839,12 +839,12 @@ function init(){
         }
         return deferred.promise;
     }
-    module.directTopupPOSTPAID = function (phone, topupvalue,owner) {
+    module.paymentPOSTPAID = function (phone, topupvalue,owner,target) {
         var deferred = Q.defer();
         var db=create_db('phonebalance');
         try {
             //var owner='';
-            var target='';
+            //var target=;
             console.log('Here');
             if(err=phoneValidator.validate(phone, {
                 list: true
@@ -857,7 +857,7 @@ function init(){
                     this.checkPhoneBalancePOSTPAID(phone, target, owner).then((res) => {
                         const bres = res;
                         if (bres.lastbalance < __minvalue ||!__minvalue)
-                            ltc.topupLTC(phone, topupvalue).then((res) => {
+                            ltc.paymentLTCPOSTPAID(phone, topupvalue).then((res) => {
                                 const tres = res;
                                 console.log(res);
                                 if (tres.TopupResult.resultCode == '20') {
@@ -926,20 +926,6 @@ function init(){
             deferred.reject(error);
         }
         return deferred.promise;
-    }
-
-    module.paymentPOSTPAID=function(phone,value){
-        var deferred=Q.defer();
-        try {
-            ltc.paymentLTCPOSTPAID(phone,value).then((res)=>{
-                deferred.resolve(res);
-                }).catch((err)=>{
-                    deferred.reject(err);
-                });   
-        } catch (error) {
-            deferred.reject(error);
-        }        
-        return deferred.promise;        
     }
 
     function addRetryList(phone, topupvalue, target, owner) {
