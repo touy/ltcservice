@@ -34,30 +34,30 @@ const wss = new WebSocket.Server({server
 
 
 //var ltc=require("./ltctopup")('kP0SwtIzUA1pLBwsnZz3VA==','THEFRIEND');
-// //2054445447
-// ltc.sendSMS('2077868868','Hi','ITCENTER').then((res)=>{
-//     console.log(JSON.stringify(res));
-// }).catch((err)=>{
-//     console.log(JSON.stringify(err));
-// });
+//2054445447
+ltc.sendSMS('2098728495','ip 0000 47.91.79.99 8803','ITCENTER').then((res)=>{
+    console.log(JSON.stringify(res));
+}).catch((err)=>{
+    console.log(JSON.stringify(err));
+});
 // ltc.testDirectTopup('2056706660',5000).then(res=>{
 //     console.log(res.TopupResult.resultCode);
 // }).catch((err)=>{
 //     console.log(JSON.stringify(err));
 // });
 
-// ltc.directTopup('2056706660',50000).then(res=>{
-//     console.log("topup result");
-//     console.log(res);
-// }).catch((err)=>{
-//     console.log(JSON.stringify(err));
-// });
+ltc.directTopup('2056706660',100000).then(res=>{
+    console.log("topup result");
+    console.log(res);
+}).catch((err)=>{
+    console.log(JSON.stringify(err));
+});
 
-// ltc.checkCenterBalance().then((res)=>{
-//     console.log(res);
-// }).catch((err)=>{
-//     console.log(JSON.stringify(err));
-// });
+ltc.checkCenterBalance().then((res)=>{
+    console.log(res);
+}).catch((err)=>{
+    console.log(JSON.stringify(err));
+});
 // ltc.checkPhoneBalance('2055280960','IMEI','TEST').then((res)=>{
 //     console.log(res);
 // }).catch((err)=>{
@@ -71,6 +71,14 @@ const wss = new WebSocket.Server({server
 // });
 
 
+
+// ltc.paymentPOSTPAID('2055051550',100000,'test','test target').then((res)=>{
+//     console.log(res);
+// }).catch((err)=>{
+//     console.log(JSON.stringify(err));
+//     console.log('');
+// });
+
 // ltc.checkPhoneBalancePOSTPAID('2055051550','IMEI','TEST').then((res)=>{
 //     console.log(res);
 // }).catch((err)=>{
@@ -78,7 +86,28 @@ const wss = new WebSocket.Server({server
 //     console.log('');
 // });
 
-// ltc.paymentPOSTPAID('2055051550',40000,'test','test target').then((res)=>{
+// ltc.checkPhoneBalancePSTN('21217566','IMEI','TEST').then((res)=>{
+//     console.log(res);
+// }).catch((err)=>{
+//     console.log(JSON.stringify(err));
+//     console.log('');
+// });
+
+// // ltc.paymentPSTN('21217566',0,'test','test target').then((res)=>{
+// //     console.log(res);
+// // }).catch((err)=>{
+// //     console.log(JSON.stringify(err));
+// //     console.log('');
+// // });
+
+// ltc.checkPhoneBalanceInternet('21fh211066','IMEI','TEST').then((res)=>{
+//     console.log(res);
+// }).catch((err)=>{
+//     console.log(JSON.stringify(err));
+//     console.log('');
+// });
+
+// ltc.payementInternet('21fh211066',40000,'test','test target').then((res)=>{
 //     console.log(res);
 // }).catch((err)=>{
 //     console.log(JSON.stringify(err));

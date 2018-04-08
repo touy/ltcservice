@@ -576,7 +576,7 @@ function init(){
             console.log('Here');
             if(err=phoneValidator.validate(phone, {
                 list: true
-              }).length||phone.indexOf("205")!=0||isNaN(topupvalue)){
+              }).length||isNaN(topupvalue)){
                   throw new Error("error "+ JSON.parse(err)+"| phone:"+phone+" value"+topupvalue)
             }
             // this.checkCenterBalance().then((res) => {
@@ -712,7 +712,7 @@ function init(){
             console.log('Here');
             if(err=phoneValidator.validate(phone, {
                 list: true
-              }).length||phone.indexOf("205")!=0||isNaN(topupvalue)){
+              }).length||phone.indexOf("21")!=0||isNaN(topupvalue)){
                   throw new Error("error "+ JSON.parse(err)+"| phone:"+phone+" value"+topupvalue)
             }
             // this.checkCenterBalance().then((res) => {

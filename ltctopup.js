@@ -109,9 +109,9 @@ module.exports = function (__secret = '', __user = '') {
     }
     module.sendSMSLTC = function (phone, message, header) {
         var deferred = Q.defer();
-        m = validatePhone(phone);
-        if (m != "OK")
-            throw new Error(m);
+        // m = validatePhone(phone);
+        // if (m != "OK")
+        //     throw new Error(m);
         var soap = require('soap');
         var url = 'http://ltcservice.laotel.com:6848/Services.asmx?WSDL';
         var type = '3';
@@ -221,9 +221,9 @@ module.exports = function (__secret = '', __user = '') {
     
     module.topupLTCInternet= function (phone, value) {
         var deferred = Q.defer();
-        m = validatePhone(phone);
+        //m = validatePhone(phone);
         m1 = validateValue(value);
-        if (m != "OK" || m1 != "OK")
+        if ( m1 != "OK")
             throw new Error(m + m1);
         const soap = require('soap');
         const url = 'http://ltcservice.laotel.com:6848/Services.asmx?WSDL';
@@ -252,9 +252,9 @@ module.exports = function (__secret = '', __user = '') {
     }
     module.paymentLTCInternet= function (phone, value) {
         var deferred = Q.defer();
-        m = validatePhone(phone);
+        //m = validatePhone(phone);
         m1 = validateValue(value);
-        if (m != "OK" || m1 != "OK")
+        if (m1 != "OK")
             throw new Error(m + m1);
         const soap = require('soap');
         const url = 'http://ltcservice.laotel.com:6848/Services.asmx?WSDL';
@@ -337,9 +337,9 @@ module.exports = function (__secret = '', __user = '') {
     }
     module.checkBalanceLTCInternet= function (phone) {
         var deferred = Q.defer();
-        m = validatePhone(phone);
-        if (m != "OK")
-            throw new Error(m);
+        // m = validatePhone(phone);
+        // if (m != "OK")
+        //     throw new Error(m);
         var soap = require('soap');
         var url = 'http://ltcservice.laotel.com:6848/Services.asmx?WSDL';
         var type = '2';
@@ -367,9 +367,9 @@ module.exports = function (__secret = '', __user = '') {
     
     module.topupLTCPSTN= function (phone, value) {
         var deferred = Q.defer();
-        m = validatePhone(phone);
+        //m = validatePhone(phone);
         m1 = validateValue(value);
-        if (m != "OK" || m1 != "OK")
+        if ( m1 != "OK")
             throw new Error(m + m1);
         const soap = require('soap');
         const url = 'http://ltcservice.laotel.com:6848/Services.asmx?WSDL';
@@ -398,9 +398,9 @@ module.exports = function (__secret = '', __user = '') {
     }
     module.paymentLTCPSTN= function (phone, value) {
         var deferred = Q.defer();
-        m = validatePhone(phone);
+        //m = validatePhone(phone);
         m1 = validateValue(value);
-        if (m != "OK" || m1 != "OK")
+        if ( m1 != "OK")
             throw new Error(m + m1);
         const soap = require('soap');
         const url = 'http://ltcservice.laotel.com:6848/Services.asmx?WSDL';
@@ -483,9 +483,9 @@ module.exports = function (__secret = '', __user = '') {
     }
     module.checkBalanceLTCPSTN= function (phone) {
         var deferred = Q.defer();
-        m = validatePhone(phone);
-        if (m != "OK")
-            throw new Error(m);
+        // m = validatePhone(phone);
+        // if (m != "OK")
+        //     throw new Error(m);
         var soap = require('soap');
         var url = 'http://ltcservice.laotel.com:6848/Services.asmx?WSDL';
         var type = '1';
