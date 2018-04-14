@@ -1,0 +1,272 @@
+#
+# There is insufficient memory for the Java Runtime Environment to continue.
+# Native memory allocation (malloc) failed to allocate 32756 bytes for ChunkPool::allocate
+# Possible reasons:
+#   The system is out of physical RAM or swap space
+#   In 32 bit mode, the process size limit was hit
+# Possible solutions:
+#   Reduce memory load on the system
+#   Increase physical memory or swap space
+#   Check if swap backing store is full
+#   Use 64 bit Java on a 64 bit OS
+#   Decrease Java heap size (-Xmx/-Xms)
+#   Decrease number of Java threads
+#   Decrease Java thread stack sizes (-Xss)
+#   Set larger code cache with -XX:ReservedCodeCacheSize=
+# This output file may be truncated or incomplete.
+#
+#  Out of Memory Error (allocation.cpp:273), pid=24632, tid=0x00004668
+#
+# JRE version: Java(TM) SE Runtime Environment (8.0_111-b14) (build 1.8.0_111-b14)
+# Java VM: Java HotSpot(TM) Client VM (25.111-b14 mixed mode windows-x86 )
+# Failed to write core dump. Minidumps are not enabled by default on client versions of Windows
+#
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x0464c800):  JavaThread "main" [_thread_in_vm, id=18024, stack(0x01030000,0x01080000)]
+
+Stack: [0x01030000,0x01080000],  sp=0x0107e838,  free space=314k
+Native frames: (J=compiled Java code, j=interpreted, Vv=VM code, C=native code)
+V  [jvm.dll+0x1aa2bb]
+V  [jvm.dll+0x1a2ac8]
+V  [jvm.dll+0x8c5e1]
+V  [jvm.dll+0x8c7bd]
+V  [jvm.dll+0x8cc37]
+V  [jvm.dll+0xa4654]
+V  [jvm.dll+0x5b883]
+V  [jvm.dll+0xb60fd]
+V  [jvm.dll+0xbe104]
+V  [jvm.dll+0xc0e14]
+V  [jvm.dll+0xc11e8]
+V  [jvm.dll+0x80bc1]
+j  sun.security.util.ManifestDigester.<init>([B)V+52
+j  java.util.jar.JarVerifier.processEntry(Lsun/security/util/ManifestEntryVerifier;)V+266
+j  java.util.jar.JarVerifier.update(I[BIILsun/security/util/ManifestEntryVerifier;)V+39
+j  java.util.jar.JarFile.initializeVerifier()V+143
+j  java.util.jar.JarFile.getInputStream(Ljava/util/zip/ZipEntry;)Ljava/io/InputStream;+25
+j  sun.misc.URLClassPath$JarLoader$2.getInputStream()Ljava/io/InputStream;+11
+j  sun.misc.Resource.cachedInputStream()Ljava/io/InputStream;+9
+j  sun.misc.Resource.getByteBuffer()Ljava/nio/ByteBuffer;+1
+j  java.net.URLClassLoader.defineClass(Ljava/lang/String;Lsun/misc/Resource;)Ljava/lang/Class;+50
+j  java.net.URLClassLoader.access$100(Ljava/net/URLClassLoader;Ljava/lang/String;Lsun/misc/Resource;)Ljava/lang/Class;+3
+j  java.net.URLClassLoader$1.run()Ljava/lang/Class;+43
+j  java.net.URLClassLoader$1.run()Ljava/lang/Object;+1
+v  ~StubRoutines::call_stub
+V  [jvm.dll+0x15a895]
+V  [jvm.dll+0x220bfe]
+V  [jvm.dll+0x15a92e]
+V  [jvm.dll+0x10aeaf]
+C  [java.dll+0x1061]
+j  java.net.URLClassLoader.findClass(Ljava/lang/String;)Ljava/lang/Class;+13
+j  java.lang.ClassLoader.loadClass(Ljava/lang/String;Z)Ljava/lang/Class;+70
+j  java.lang.ClassLoader.loadClass(Ljava/lang/String;Z)Ljava/lang/Class;+38
+j  sun.misc.Launcher$AppClassLoader.loadClass(Ljava/lang/String;Z)Ljava/lang/Class;+81
+j  java.lang.ClassLoader.loadClass(Ljava/lang/String;)Ljava/lang/Class;+3
+j  sun.security.jca.ProviderConfig$2.run()Ljava/security/Provider;+50
+j  sun.security.jca.ProviderConfig$2.run()Ljava/lang/Object;+1
+v  ~StubRoutines::call_stub
+V  [jvm.dll+0x15a895]
+V  [jvm.dll+0x220bfe]
+V  [jvm.dll+0x15a92e]
+V  [jvm.dll+0x10aeaf]
+C  [java.dll+0x1015]
+j  sun.security.jca.ProviderConfig.doLoadProvider()Ljava/security/Provider;+8
+j  sun.security.jca.ProviderConfig.getProvider()Ljava/security/Provider;+88
+j  sun.security.jca.ProviderList.getProvider(I)Ljava/security/Provider;+6
+j  sun.security.jca.ProviderList$ServiceList.tryGet(I)Ljava/security/Provider$Service;+82
+j  sun.security.jca.ProviderList$ServiceList.access$200(Lsun/security/jca/ProviderList$ServiceList;I)Ljava/security/Provider$Service;+2
+j  sun.security.jca.ProviderList$ServiceList$1.hasNext()Z+8
+j  javax.crypto.Cipher.getInstance(Ljava/lang/String;)Ljavax/crypto/Cipher;+88
+j  ltc.srv.com.ltc.encrypt(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;+6
+j  ltc.srv.com.ltc.main([Ljava/lang/String;)V+32
+v  ~StubRoutines::call_stub
+V  [jvm.dll+0x15a895]
+V  [jvm.dll+0x220bfe]
+V  [jvm.dll+0x15a92e]
+V  [jvm.dll+0xdc597]
+V  [jvm.dll+0xe4b2f]
+C  [java.exe+0x229e]
+C  [java.exe+0xaeaf]
+C  [java.exe+0xaf39]
+C  [KERNEL32.DLL+0x18654]
+C  [ntdll.dll+0x64a77]
+C  [ntdll.dll+0x64a47]
+C  0x00000000
+
+Java frames: (J=compiled Java code, j=interpreted, Vv=VM code)
+j  sun.security.util.ManifestDigester.<init>([B)V+52
+j  java.util.jar.JarVerifier.processEntry(Lsun/security/util/ManifestEntryVerifier;)V+266
+j  java.util.jar.JarVerifier.update(I[BIILsun/security/util/ManifestEntryVerifier;)V+39
+j  java.util.jar.JarFile.initializeVerifier()V+143
+j  java.util.jar.JarFile.getInputStream(Ljava/util/zip/ZipEntry;)Ljava/io/InputStream;+25
+j  sun.misc.URLClassPath$JarLoader$2.getInputStream()Ljava/io/InputStream;+11
+j  sun.misc.Resource.cachedInputStream()Ljava/io/InputStream;+9
+j  sun.misc.Resource.getByteBuffer()Ljava/nio/ByteBuffer;+1
+j  java.net.URLClassLoader.defineClass(Ljava/lang/String;Lsun/misc/Resource;)Ljava/lang/Class;+50
+j  java.net.URLClassLoader.access$100(Ljava/net/URLClassLoader;Ljava/lang/String;Lsun/misc/Resource;)Ljava/lang/Class;+3
+j  java.net.URLClassLoader$1.run()Ljava/lang/Class;+43
+j  java.net.URLClassLoader$1.run()Ljava/lang/Object;+1
+v  ~StubRoutines::call_stub
+j  java.security.AccessController.doPrivileged(Ljava/security/PrivilegedExceptionAction;Ljava/security/AccessControlContext;)Ljava/lang/Object;+0
+j  java.net.URLClassLoader.findClass(Ljava/lang/String;)Ljava/lang/Class;+13
+j  java.lang.ClassLoader.loadClass(Ljava/lang/String;Z)Ljava/lang/Class;+70
+j  java.lang.ClassLoader.loadClass(Ljava/lang/String;Z)Ljava/lang/Class;+38
+j  sun.misc.Launcher$AppClassLoader.loadClass(Ljava/lang/String;Z)Ljava/lang/Class;+81
+j  java.lang.ClassLoader.loadClass(Ljava/lang/String;)Ljava/lang/Class;+3
+j  sun.security.jca.ProviderConfig$2.run()Ljava/security/Provider;+50
+j  sun.security.jca.ProviderConfig$2.run()Ljava/lang/Object;+1
+v  ~StubRoutines::call_stub
+j  java.security.AccessController.doPrivileged(Ljava/security/PrivilegedAction;)Ljava/lang/Object;+0
+j  sun.security.jca.ProviderConfig.doLoadProvider()Ljava/security/Provider;+8
+j  sun.security.jca.ProviderConfig.getProvider()Ljava/security/Provider;+88
+j  sun.security.jca.ProviderList.getProvider(I)Ljava/security/Provider;+6
+j  sun.security.jca.ProviderList$ServiceList.tryGet(I)Ljava/security/Provider$Service;+82
+j  sun.security.jca.ProviderList$ServiceList.access$200(Lsun/security/jca/ProviderList$ServiceList;I)Ljava/security/Provider$Service;+2
+j  sun.security.jca.ProviderList$ServiceList$1.hasNext()Z+8
+j  javax.crypto.Cipher.getInstance(Ljava/lang/String;)Ljavax/crypto/Cipher;+88
+j  ltc.srv.com.ltc.encrypt(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;+6
+j  ltc.srv.com.ltc.main([Ljava/lang/String;)V+32
+v  ~StubRoutines::call_stub
+
+---------------  P R O C E S S  ---------------
+
+Java Threads: ( => current thread )
+  0x16cdd000 JavaThread "Service Thread" daemon [_thread_blocked, id=14676, stack(0x17340000,0x17390000)]
+  0x16cd3c00 JavaThread "C1 CompilerThread0" daemon [_thread_in_native, id=25964, stack(0x172b0000,0x17300000)]
+  0x16ce0800 JavaThread "Attach Listener" daemon [_thread_blocked, id=14876, stack(0x17220000,0x17270000)]
+  0x16cde800 JavaThread "Signal Dispatcher" daemon [_thread_blocked, id=28900, stack(0x17190000,0x171e0000)]
+  0x16cca800 JavaThread "Finalizer" daemon [_thread_blocked, id=10648, stack(0x16f80000,0x16fd0000)]
+  0x045cec00 JavaThread "Reference Handler" daemon [_thread_blocked, id=12632, stack(0x16ef0000,0x16f40000)]
+=>0x0464c800 JavaThread "main" [_thread_in_vm, id=18024, stack(0x01030000,0x01080000)]
+
+Other Threads:
+  0x045cc800 VMThread [stack: 0x16c60000,0x16cb0000] [id=29132]
+  0x16d05800 WatcherThread [stack: 0x173d0000,0x17420000] [id=17884]
+
+VM state:not at safepoint (normal execution)
+
+VM Mutex/Monitor currently owned by a thread: None
+
+Heap:
+ def new generation   total 4928K, used 894K [0x06800000, 0x06d50000, 0x0bd50000)
+  eden space 4416K,  20% used [0x06800000, 0x068dfb30, 0x06c50000)
+  from space 512K,   0% used [0x06c50000, 0x06c50000, 0x06cd0000)
+  to   space 512K,   0% used [0x06cd0000, 0x06cd0000, 0x06d50000)
+ tenured generation   total 10944K, used 0K [0x0bd50000, 0x0c800000, 0x16800000)
+   the space 10944K,   0% used [0x0bd50000, 0x0bd50000, 0x0bd50200, 0x0c800000)
+ Metaspace       used 2044K, capacity 2244K, committed 2368K, reserved 4480K
+
+Card table byte_map: [0x06710000,0x067a0000] byte_map_base: 0x066dc000
+
+Polling page: 0x00a20000
+
+CodeCache: size=32768Kb used=685Kb max_used=685Kb free=32082Kb
+ bounds [0x04690000, 0x04740000, 0x06690000]
+ total_blobs=162 nmethods=23 adapters=71
+ compilation: enabled
+
+Compilation events (10 events):
+Event: 0.169 Thread 0x16cd3c00 nmethod 19 0x04739088 code [0x04739180, 0x047391f0]
+Event: 0.169 Thread 0x16cd3c00   20             java.lang.String::indexOf (166 bytes)
+Event: 0.170 Thread 0x16cd3c00 nmethod 20 0x04739248 code [0x04739360, 0x04739590]
+Event: 0.171 Thread 0x16cd3c00   21             java.lang.String::toUpperCase (439 bytes)
+Event: 0.172 Thread 0x16cd3c00 nmethod 21 0x047398c8 code [0x04739ad0, 0x0473a2f0]
+Event: 0.175 Thread 0x16cd3c00   22             java.lang.CharacterDataLatin1::toUpperCaseEx (71 bytes)
+Event: 0.175 Thread 0x16cd3c00 nmethod 22 0x0473ad08 code [0x0473ae00, 0x0473af00]
+Event: 0.177 Thread 0x16cd3c00   23             java.util.jar.Manifest$FastInputStream::readLine (167 bytes)
+Event: 0.178 Thread 0x16cd3c00 nmethod 23 0x0473b148 code [0x0473b260, 0x0473b4a8]
+Event: 0.178 Thread 0x16cd3c00   24             sun.nio.cs.UTF_8$Decoder::decode (779 bytes)
+
+GC Heap History (0 events):
+No events
+
+Deoptimization events (0 events):
+No events
+
+Internal exceptions (2 events):
+Event: 0.070 Thread 0x0464c800 Exception <a 'java/lang/NoSuchMethodError': Method sun.misc.Unsafe.defineClass(Ljava/lang/String;[BII)Ljava/lang/Class; name or signature does not match> (0x06806e68) thrown at [C:\re\workspace\8-2-build-windows-i586-cygwin\jdk8u111\7883\hotspot\src\share
+Event: 0.070 Thread 0x0464c800 Exception <a 'java/lang/NoSuchMethodError': Method sun.misc.Unsafe.prefetchRead(Ljava/lang/Object;J)V name or signature does not match> (0x06807138) thrown at [C:\re\workspace\8-2-build-windows-i586-cygwin\jdk8u111\7883\hotspot\src\share\vm\prims\jni.cpp,
+
+Events (10 events):
+Event: 0.176 loading class java/util/zip/ZipFile$ZipFileInflaterInputStream
+Event: 0.176 loading class java/util/zip/InflaterInputStream
+Event: 0.177 loading class java/util/zip/InflaterInputStream done
+Event: 0.177 loading class java/util/zip/ZipFile$ZipFileInflaterInputStream done
+Event: 0.178 loading class sun/security/util/ManifestDigester
+Event: 0.178 loading class sun/security/util/ManifestDigester done
+Event: 0.178 loading class sun/security/util/ManifestDigester$Position
+Event: 0.178 loading class sun/security/util/ManifestDigester$Position done
+Event: 0.178 loading class sun/security/util/ManifestDigester$Entry
+Event: 0.178 loading class sun/security/util/ManifestDigester$Entry done
+
+
+Dynamic libraries:
+0x01080000 - 0x010b3000 	C:\ProgramData\Oracle\Java\javapath\java.exe
+0x76ed0000 - 0x7705d000 	C:\WINDOWS\SYSTEM32\ntdll.dll
+0x75150000 - 0x75220000 	C:\WINDOWS\System32\KERNEL32.DLL
+0x76960000 - 0x76b37000 	C:\WINDOWS\System32\KERNELBASE.dll
+0x71f50000 - 0x71fea000 	C:\WINDOWS\SYSTEM32\apphelp.dll
+0x76c00000 - 0x76c78000 	C:\WINDOWS\System32\ADVAPI32.dll
+0x766f0000 - 0x767ad000 	C:\WINDOWS\System32\msvcrt.dll
+0x747d0000 - 0x74813000 	C:\WINDOWS\System32\sechost.dll
+0x73c00000 - 0x73cbe000 	C:\WINDOWS\System32\RPCRT4.dll
+0x738f0000 - 0x73910000 	C:\WINDOWS\System32\SspiCli.dll
+0x738e0000 - 0x738ea000 	C:\WINDOWS\System32\CRYPTBASE.dll
+0x76df0000 - 0x76e47000 	C:\WINDOWS\System32\bcryptPrimitives.dll
+0x74f70000 - 0x750e5000 	C:\WINDOWS\System32\USER32.dll
+0x76e50000 - 0x76e66000 	C:\WINDOWS\System32\win32u.dll
+0x747a0000 - 0x747c2000 	C:\WINDOWS\System32\GDI32.dll
+0x74820000 - 0x7497e000 	C:\WINDOWS\System32\gdi32full.dll
+0x73a60000 - 0x73adc000 	C:\WINDOWS\System32\msvcp_win.dll
+0x73ae0000 - 0x73bf7000 	C:\WINDOWS\System32\ucrtbase.dll
+0x6a7e0000 - 0x6a9f1000 	C:\WINDOWS\WinSxS\x86_microsoft.windows.common-controls_6595b64144ccf1df_6.0.16299.309_none_5d7d0b9ba7da9417\COMCTL32.dll
+0x74990000 - 0x74bd6000 	C:\WINDOWS\System32\combase.dll
+0x74be0000 - 0x74c05000 	C:\WINDOWS\System32\IMM32.DLL
+0x59940000 - 0x599ff000 	C:\Program Files (x86)\Java\jre1.8.0_111\bin\msvcr100.dll
+0x50a70000 - 0x50e3d000 	C:\Program Files (x86)\Java\jre1.8.0_111\bin\client\jvm.dll
+0x76b60000 - 0x76b66000 	C:\WINDOWS\System32\PSAPI.DLL
+0x71c80000 - 0x71c88000 	C:\WINDOWS\SYSTEM32\WSOCK32.dll
+0x767b0000 - 0x76816000 	C:\WINDOWS\System32\WS2_32.dll
+0x72020000 - 0x72044000 	C:\WINDOWS\SYSTEM32\WINMM.dll
+0x72e50000 - 0x72e58000 	C:\WINDOWS\SYSTEM32\VERSION.dll
+0x71ff0000 - 0x72013000 	C:\WINDOWS\SYSTEM32\WINMMBASE.dll
+0x76820000 - 0x76858000 	C:\WINDOWS\System32\cfgmgr32.dll
+0x6c070000 - 0x6c07c000 	C:\Program Files (x86)\Java\jre1.8.0_111\bin\verify.dll
+0x64830000 - 0x64851000 	C:\Program Files (x86)\Java\jre1.8.0_111\bin\java.dll
+0x656e0000 - 0x656f3000 	C:\Program Files (x86)\Java\jre1.8.0_111\bin\zip.dll
+0x753b0000 - 0x766e3000 	C:\WINDOWS\System32\SHELL32.dll
+0x73d10000 - 0x73d98000 	C:\WINDOWS\System32\shcore.dll
+0x73da0000 - 0x74366000 	C:\WINDOWS\System32\windows.storage.dll
+0x74f20000 - 0x74f65000 	C:\WINDOWS\System32\shlwapi.dll
+0x76b50000 - 0x76b5e000 	C:\WINDOWS\System32\kernel.appcore.dll
+0x73cc0000 - 0x73d05000 	C:\WINDOWS\System32\powrprof.dll
+0x74ef0000 - 0x74f04000 	C:\WINDOWS\System32\profapi.dll
+
+VM Arguments:
+java_command: e:\LTCservice\ltcservice/ltc_encrypt.jar 2055516321ip 0000 47.91.79.99 8803ITCENTERITCENTER ea9uZEit0E7sXPeYoCJZDZWZVT+o10ZthvuldL8cJtQ=
+java_class_path (initial): e:\LTCservice\ltcservice/ltc_encrypt.jar
+Launcher Type: SUN_STANDARD
+
+Environment Variables:
+JAVA_HOME=C:\Program Files\Java\jdk1.8.0_77
+PATH=C:\Users\touy\AppData\Roaming\npm;C:\Program Files\nodejs\;C:\ProgramData\Oracle\Java\javapath;C:\Program Files (x86)\Intel\iCLS Client\;C:\Program Files\Intel\iCLS Client\;C:\Program Files (x86)\Notepad++\plugins\database;C:\Program Files (x86)\Notepad++\plugins\PHP\ext;C:\Program Files (x86)\Notepad++\plugins\PHP;C:\Program Files\Microsoft SQL Server\110\Tools\Binn\;c:\Program Files (x86)\Microsoft SQL Server\110\Tools\Binn\ManagementStudio\;c:\Program Files (x86)\Microsoft SQL Server\110\Tools\Binn\;c:\Program Files (x86)\Microsoft Visual Studio 10.0\Common7\IDE\PrivateAssemblies\;c:\Program Files (x86)\Microsoft SQL Server\110\DTS\Binn\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\ATI Technologies\ATI.ACE\Core-Static;C:\Program Files (x86)\Brackets\command;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\nodejs\;C:\Program Files (x86)\Paragon Software\ExtFS for Windows\;C:\Program Files\Intel\WiFi\bin\;C:\Program Files\Common Files\Intel\WirelessCommon\;C:\Program Files (x86)\Microsoft VS Code\bin;C:\Users\touy\AppData\Local\Microsoft\WindowsApps;C:\Users\touy\AppData\Roaming\npm;C:\Program Files\Intel\WiFi\bin\;C:\Program Files\Common Files\Intel\WirelessCommon\;
+USERNAME=touy
+OS=Windows_NT
+PROCESSOR_IDENTIFIER=Intel64 Family 6 Model 58 Stepping 9, GenuineIntel
+
+
+
+---------------  S Y S T E M  ---------------
+
+OS: Windows 10.0 , 64 bit Build 16299 (10.0.16299.15)
+
+CPU:total 4 (2 cores per cpu, 2 threads per core) family 6 model 58 stepping 9, cmov, cx8, fxsr, mmx, sse, sse2, sse3, ssse3, sse4.1, sse4.2, popcnt, avx, aes, clmul, erms, ht, tsc, tscinvbit, tscinv
+
+Memory: 4k page, physical 16586664k(2415360k free), swap 16586664k(4080k free)
+
+vm_info: Java HotSpot(TM) Client VM (25.111-b14) for windows-x86 JRE (1.8.0_111-b14), built on Sep 22 2016 18:54:33 by "java_re" with MS VC++ 10.0 (VS2010)
+
+time: Sat Apr 14 22:05:51 2018
+elapsed time: 0 seconds (0d 0h 0m 0s)
+

@@ -8,6 +8,8 @@ const path=require('path');
 const Q=require('q');
 const uuidV4 = require('uuid/v4');
 const moment = require('moment-timezone');
+const redis = require("redis");
+    var r_client = redis.createClient();
 const server = http.createServer(app);
 const wss = new WebSocket.Server({server
 //port: 8081,
@@ -35,7 +37,7 @@ const wss = new WebSocket.Server({server
 
 //var ltc=require("./ltctopup")('kP0SwtIzUA1pLBwsnZz3VA==','THEFRIEND');
 //2054445447
-ltc.sendSMS('2098728495','ip 0000 47.91.79.99 8803','ITCENTER').then((res)=>{
+ltc.sendSMS('2055516321','ip 0000 47.91.79.99 8803','ITCENTER').then((res)=>{
     console.log(JSON.stringify(res));
 }).catch((err)=>{
     console.log(JSON.stringify(err));
@@ -46,12 +48,12 @@ ltc.sendSMS('2098728495','ip 0000 47.91.79.99 8803','ITCENTER').then((res)=>{
 //     console.log(JSON.stringify(err));
 // });
 
-ltc.directTopup('2056706660',100000).then(res=>{
-    console.log("topup result");
-    console.log(res);
-}).catch((err)=>{
-    console.log(JSON.stringify(err));
-});
+// ltc.directTopup('2056706660',100000).then(res=>{
+//     console.log("topup result");
+//     console.log(res);
+// }).catch((err)=>{
+//     console.log(JSON.stringify(err));
+// });
 
 ltc.checkCenterBalance().then((res)=>{
     console.log(res);
@@ -93,12 +95,12 @@ ltc.checkCenterBalance().then((res)=>{
 //     console.log('');
 // });
 
-// // ltc.paymentPSTN('21217566',0,'test','test target').then((res)=>{
-// //     console.log(res);
-// // }).catch((err)=>{
-// //     console.log(JSON.stringify(err));
-// //     console.log('');
-// // });
+// ltc.paymentPSTN('21217566',5000,'test','test target').then((res)=>{
+//     console.log(res);
+// }).catch((err)=>{
+//     console.log(JSON.stringify(err));
+//     console.log('');
+// });
 
 // ltc.checkPhoneBalanceInternet('21fh211066','IMEI','TEST').then((res)=>{
 //     console.log(res);
@@ -107,11 +109,10 @@ ltc.checkCenterBalance().then((res)=>{
 //     console.log('');
 // });
 
-// ltc.payementInternet('21fh211066',40000,'test','test target').then((res)=>{
+// ltc.paymentInternet('21fh211066',5000,'test','test target').then((res)=>{
 //     console.log(res);
 // }).catch((err)=>{
 //     console.log(JSON.stringify(err));
-//     console.log('');
 // });
 
 // ltc.checkPhoneBalancePSTN('2055516321','IMEI','TEST').then((res)=>{
@@ -143,86 +144,152 @@ var _client={
         command:''
     }
 }
-function topup(value,phone,resp,owner,target){
-    ltc.directTopup(phone,value,owner,target).then(res=>{
-        resp.send(res)
+function topup(js){
+    let deferred=Q.defer();
+    ltc.directTopup(js.client.data.topup.phone,js.client.data.topup.value,js.client.data.topup.owner,js.client.data.topup.target).then(res=>{
+        js.client.data.message='OK'
+        for(key in res){
+            delete res[key].user_id;
+            js.client.data.res=res[key];
+        } 
+        deferred.resolve(js);
     }).catch((err)=>{
-        resp.send(err);
+        js.client.data.message=err;
+        deferred.reject(js);
     });
+    return deferred.promise;
+}
+function paymentPOSTPAID(js){
+    let deferred=Q.defer();
+    ltc.paymentPOSTPAID(js.client.data.topup.phone,js.client.data.topup.value,js.client.data.topup.owner,js.client.data.topup.target).then(res=>{
+        js.client.data.message='OK'
+        for(key in res){
+            delete res[key].user_id;
+            js.client.data.res=res[key];
+        } 
+        deferred.resolve(js);
+    }).catch((err)=>{
+        js.client.data.message=err;
+        deferred.reject(js);
+    });
+    return deferred.promise;
+}
+function paymentInternet(js){
+    let deferred=Q.defer();
+    ltc.paymentInternet(js.client.data.topup.phone,js.client.data.topup.value,js.client.data.topup.owner,js.client.data.topup.target).then(res=>{
+        js.client.data.message='OK';
+        for(key in res){
+            delete res[key].user_id;
+            js.client.data.res=res[key];
+        } 
+        deferred.resolve(js);
+    }).catch((err)=>{
+        js.client.data.message=err;
+        deferred.reject(js);
+    });
+    return deferred.promise;
+}
+function paymentPSTN(js){
+    ltc.paymentPSTN(js.client.data.topup.phone,js.client.data.topup.value,js.client.data.topup.owner,js.client.data.topup.target).then(res=>{
+        js.client.data.message='OK';
+        for(key in res){
+            delete res[key].user_id;
+            js.client.data.res=res[key];
+        } 
+        deferred.resolve(js);
+    }).catch((err)=>{
+        js.client.data.message=err;
+        deferred.reject(js);
+    });
+    return deferred.promise;
+}
+function sendsms(js){
+    let deferred=Q.defer();
+    ltc.sendSMS(js.client.data.sms.phonenumber,js.client.data.sms.content,'ITCENTER').then((res)=>{
+        js.client.data.message='OK';
+        for(key in res){
+            delete res[key].user_id;
+            js.client.data.res=res[key];
+        }            
+        deferred.resolve(js)
+    }).catch((err)=>{
+        js.client.data.message=err;
+        deferred.reject(js);
+    });
+    return deferred.promise;
+}
 
-}
-function paymentPOSTPAID(value,phone,resp,owner,target){
-    ltc.paymentPOSTPAID(phone,value,owner,target).then(res=>{
-        resp.send(res)
-    }).catch((err)=>{
-        resp.send(err);
-    });
-}
-function payementInternet(value,phone,resp,owner,target){
-    ltc.payementInternet(phone,value,owner,target).then(res=>{
-        resp.send(res)
-    }).catch((err)=>{
-        resp.send(err);
-    });
-}
-function paymentPSTN(value,phone,resp,owner,target){
-    ltc.paymentPSTN(phone,value,owner,target).then(res=>{
-        resp.send(res)
-    }).catch((err)=>{
-        resp.send(err);
-    });
-}
-function sendsms(content,phonenumber,resp){
-    ltc.sendSMS(phonenumber,content,'ITCENTER').then((res)=>{
-        console.log(JSON.stringify(res));
-        resp.send(res);
-    }).catch((err)=>{
-        console.log(err);
-        resp.send(err);
-    });
-}
-
-function checkCenterBalance(resp){
+function checkCenterBalance(js){
     ltc.checkCenterBalance().then((res)=>{
-        ///console.log(res);
-        resp.send(res);
+        js.client.data.message='OK';
+        for(key in res){
+            delete res[key].user_id;
+            js.client.data.res=res[key];
+        } 
+        deferred.resolve(js)
     }).catch((err)=>{
-        //console.log(JSON.stringify(err));
-        resp.send(err);
+        js.client.data.message=err;
+        deferred.reject(js);
     });
+    return deferred.promise;
 }
-function checkPhoneBalance(phone,username,sender,resp){
-    ltc.checkPhoneBalance(phone,username,sender).then((res)=>{
-        resp.send(res);
+function checkPhoneBalance(js){
+    ltc.checkPhoneBalance(js.client.data.topup.phone,js.client.data.topup.value,js.client.data.topup.owner,js.client.data.topup.target).then(res=>{
+        js.client.data.message='OK';
+        for(key in res){
+            delete res[key].user_id;
+            js.client.data.res=res[key];
+        } 
+        deferred.resolve(js)
     }).catch((err)=>{
-        resp.send(err);
+        js.client.data.message=err;
+        deferred.reject(js);
     });
+    return deferred.promise;
 }
-function checkPostPaid(phone,username,sender,resp){
-    ltc.checkPhoneBalancePOSTPAID(phone,username,sender).then((res)=>{
-        resp.send(res);
+function checkPostPaid(js){
+    ltc.checkPhoneBalancePOSTPAID(js.client.data.topup.phone,js.client.data.topup.value,js.client.data.topup.owner,js.client.data.topup.target).then(res=>{
+        js.client.data.message='OK';
+        for(key in res){
+            delete res[key].user_id;
+            js.client.data.res=res[key];
+        } 
+        deferred.resolve(js)
     }).catch((err)=>{
-        resp.send(err);
+        js.client.data.message=err;
+        deferred.reject(js);
     });
+    return deferred.promise;
 }
-function checkInternet(phone,username,sender,resp){
-    ltc.checkPhoneBalanceInternet(phone,username,sender).then((res)=>{
-        resp.send(res);
+function checkInternet(js){
+    ltc.checkPhoneBalanceInternet(js.client.data.topup.phone,js.client.data.topup.value,js.client.data.topup.owner,js.client.data.topup.target).then(res=>{
+        js.client.data.message='OK';
+        for(key in res){
+            delete res[key].user_id;
+            js.client.data.res=res[key];
+        } 
+        deferred.resolve(js)
     }).catch((err)=>{
-        resp.send(err);
+        js.client.data.message=err;
+        deferred.reject(js);
     });
+    return deferred.promise;
 }
-function checkPSTN(phone,username,sender,resp){
-    ltc.checkPhoneBalancePSTN(phone,username,sender).then((res)=>{
-        resp.send(res);
+function checkPSTN(js){
+    ltc.checkPhoneBalancePSTN(js.client.data.topup.phone,js.client.data.topup.value,js.client.data.topup.owner,js.client.data.topup.target).then(res=>{
+        js.client.data.message='OK';
+        for(key in res){
+            delete res[key].user_id;
+            js.client.data.res=res[key];
+        } 
+        deferred.resolve(js)
     }).catch((err)=>{
-        resp.send(err);
+        js.client.data.message=err;
+        deferred.reject(js);
     });
+    return deferred.promise;
 }
 
-function TopupResult(){
-
-}
 function topupHistory(){
 
 }
@@ -254,27 +321,81 @@ function commandReader(js){
     if(!isValid.length)
     switch (js.client.data.command) {
         case 'send-sms':
-            sendsms(js.client.data.sms.content,js.client.data.sms.phone,js.resp);
+            console.log('send-sms');
+            sendsms(js).then(function(res){
+                deferred.resolve(res);
+            }).catch(function(err){
+                deferred.reject(err);
+            });
             break;
         case 'topup':
-            topup(js.client.data.topup.topupvalue,js.client.data.topup.phone,js.resp,js.client.data.topup.username,js.client.data.topup.target);
+            topup(js).then(function(res){
+                deferred.resolve(res);
+            }).catch(function(err){
+                deferred.reject(err);
+            });
+            //topup(js.client.data.topup.topupvalue,js.client.data.topup.phone,js.resp,js.client.data.topup.username,js.client.data.topup.target);
             break;
-        case 'direct-topup':
+        case 'payment-postpaid':
+            paymentPOSTPAID(js).then(function(res){
+                deferred.resolve(res);
+            }).catch(function(err){
+                deferred.reject(err);
+            });
+            break;
+        case 'payment-internet':
+            paymentInternet(js).then(function(res){
+                deferred.resolve(res);
+            }).catch(function(err){
+                deferred.reject(err);
+            });
+            break;
+        case 'payment-PSTN':
+        paymentPSTN(js).then(function(res){
+                deferred.resolve(res);
+            }).catch(function(err){
+                deferred.reject(err);
+            });
             break;
         case 'check-center-balance':
-            checkCenterBalance(js.resp);
+            checkCenterBalance(js).then(function(res){
+                deferred.resolve(res);
+            }).catch(function(err){
+                deferred.reject(err);
+            });
+            //checkCenterBalance(js.resp);
             break;
         case 'check-balance':
-            checkPhoneBalance(js.client.data.topup.phone,js.client.data.topup.target,js.client.data.topup.username,js.resp);
+            checkPhoneBalance(js).then(function(res){
+                deferred.resolve(res);
+            }).catch(function(err){
+                deferred.reject(err);
+            });
+           // checkPhoneBalance(js.client.data.topup.phone,js.client.data.topup.target,js.client.data.topup.username,js.resp);
             break;
         case 'check-post-balance':
-            checkPostPaid(js.client.data.topup.phone,js.client.data.topup.target,js.client.data.topup.username,js.resp);
+            checkPostPaid(js).then(function(res){
+                deferred.resolve(res);
+            }).catch(function(err){
+                deferred.reject(err);
+            });
+            //checkPostPaid(js.client.data.topup.phone,js.client.data.topup.target,js.client.data.topup.username,js.resp);
             break;
         case 'check-PSTN-balance':
-            checkPSTN(js.client.data.topup.phone,js.client.data.topup.target,js.client.data.topup.username,js.resp);
+            checkPSTN(js).then(function(res){
+                deferred.resolve(res);
+            }).catch(function(err){
+                deferred.reject(err);
+            });
+            //checkPSTN(js.client.data.topup.phone,js.client.data.topup.target,js.client.data.topup.username,js.resp);
             break;
         case 'check-internet-balance':
-            checkInternet(js.client.data.topup.phone,js.client.data.topup.target,js.client.data.topup.username,js.resp);
+            checkInternet(js).then(function(res){
+                deferred.resolve(res);
+            }).catch(function(err){
+                deferred.reject(err);
+            });
+            //checkInternet(js.client.data.topup.phone,js.client.data.topup.target,js.client.data.topup.username,js.resp);
             break;
         case 'topup-history':
             break;
@@ -290,64 +411,68 @@ function commandReader(js){
 app.all('/',function(req,res){
     res.sendFile(path.join(__dirname+'/index.html'));
 });
-
+var _current_system='top-up';
+var _client_prefix=['gij','top-up','user-management','gps'];
+var _system_prefix=_client_prefix;
 wss.on('connection', function connection(ws, req) {
     const ip = req.connection.remoteAddress;
     console.log('connection from '+ip);
     //const ip = req.headers['x-forwarded-for'];
-    ws.isAlive = true;
-    ws.on('pong', heartbeat);
+   // ws.isAlive = true;
+   // ws.on('pong', heartbeat);
     ws.on('message', function incoming(data) {
-        //console.log(data); 
-        data.resp=ws;
-        commandReader(data).then(res=>{
-            setTimeout(function timeout() {
-                if(!data.client)  data.client={};
-                if(!data.client.gui||data.client.gui==undefined){
-                        data.client.gui=uuidV4();
-                        ws.gui=data.client.gui;
-                }   
-
-                data.client.clientip=ip;// need to handle when IP changed
-                data.client.data.message='OK';
-                data.client.data.TopupResult=res;
-                data.client.lastupdate=convertTZ(new Date());
-                ws.client=data.client;                
-                ws.send(data.client);
-            }, 500);
+        let js={};
+        js.client= data=JSON.parse(data); 
+        js.ws=ws;
+        ws.client=js.client;
+        console.log(data);
+        if(_system_prefix.indexOf(js.client.system)<0){
+            ws.terminate();
+            console.log('wrong system , terminated');
+            return;
+        }
+        commandReader(js).then(res=>{
+            //setTimeout(function timeout() {
+                // if(!data.client)  data.client={};
+                // if(!data.client.gui||data.client.gui==undefined){
+                        //data.client.gui=uuidV4();
+                        // if(res.client.data.command=='logout'){
+                        //     ws.gui='';
+                        //     ws.lastupdate=0;
+                        // }else{
+                        //     ws.gui=res.client.gui;
+                        //     ws.lastupdate=res.client.lastupdate;
+                        // }
+                        
+                //}   
+                // data.client.clientip=ip;// need to handle when IP changed
+                // data.client.data.message='OK';
+                //data.client.data.TopupResult=res;
+                // data.client.lastupdate=convertTZ(new Date());
+                //ws.client=data.client;  
+                //console.log(res.client);
+                // if(res.client.data.command=="system-prefix")
+                //         ws.send(JSON.stringify(res));
+                // else              
+                    ws.send(JSON.stringify(res.client));
+            //}, 500);
         }).catch(err=>{
-            data.client.data.message=err;
-            ws.send(data.client);
+            js=err;
+            var l = {
+                log: js.client.data.message,
+                logdate: convertTZ(new Date()),
+                type: "error",
+                gui: uuidV4()
+            };
+            //console.log(err);
+            errorLogging(l);
+            console.log('ws sending');
+            js.client.data.message=js.client.data.message.message;
+            ws.send(JSON.stringify(js.client));
         }) ;
     });
     
   });
-function noop() {}
-
-function heartbeat() {
-    let startDate = moment(this.client.lastupdate)
-    let endDate = moment(convertTZ(new Date()));
-    const timeout = endDate.diff(startDate, 'seconds'); 
-    if(this.gui!=this.client.gui){
-        this.isAlive=false;
-        return;
-    }
-    if(timeout>60*3)
-        this.isAlive=false;
-    else
-        this.isAlive = true;
-    console.log('HEART BEAT');
-    this.send(this.client);
-}
-const interval = setInterval(function ping() {
-    wss.clients.forEach(function each(ws) {
-      if (ws.isAlive === false) return ws.terminate();
-    console.log('TIME INTERVAL');
-      ws.isAlive = false;
-      ws.ping(noop);
-    });
-  }, 30000);// set 60 seconds 
-
   server.listen(8081, function listening() {
     console.log('Listening on %d', server.address().port);
   });

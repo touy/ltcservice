@@ -105,7 +105,7 @@ module.exports = function (__secret = '', __user = '') {
             console.log(err);
             deferred.reject(err);
         });
-        return defered.promise;
+        return deferred.promise;
     }
     module.sendSMSLTC = function (phone, message, header) {
         var deferred = Q.defer();
@@ -125,8 +125,12 @@ module.exports = function (__secret = '', __user = '') {
                 key: body
             };
             soap.createClient(url, function (err, client) {
+                if(err)deferred.reject(err);
+                else
                 client.SendSMS(args, function (err, result) {
                     //var res=[];res.push(result);
+                    if(err)deferred.reject(err);
+                    else
                     deferred.resolve(result);
                     //console.log(result);
                 });
@@ -280,7 +284,7 @@ module.exports = function (__secret = '', __user = '') {
             console.log(err);
             deferred.reject(err);
         });
-        return defered.promise;
+        return deferred.promise;
     }
 
     module.queryDetailsLTCInternet= function (startdate, enddate) {
@@ -426,7 +430,7 @@ module.exports = function (__secret = '', __user = '') {
             console.log(err);
             deferred.reject(err);
         });
-        return defered.promise;
+        return deferred.promise;
     }
 
     module.queryDetailsLTCPSTN= function (startdate, enddate) {
@@ -572,7 +576,7 @@ module.exports = function (__secret = '', __user = '') {
             console.log(err);
             deferred.reject(err);
         });
-        return defered.promise;
+        return deferred.promise;
     }
 
     module.queryDetailsLTCPOSTPAID= function (startdate, enddate) {

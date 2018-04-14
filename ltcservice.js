@@ -511,7 +511,7 @@ function init(){
         var deferred=Q.defer();
         try {
             ltc.sendSMSLTC(phone,message,header).then((res)=>{
-                deferred.resolve(res);
+                    deferred.resolve(res);
                 }).catch((err)=>{
                     deferred.reject(err);
                 });   
