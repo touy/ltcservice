@@ -4,12 +4,13 @@ const http = require('http');
 const url = require('url');
 const ltc = require("./ltcservice")('ea9uZEit0E7sXPeYoCJZDZWZVT+o10ZthvuldL8cJtQ=', 'ITCENTER',0);
 const app = express();
+app.set('trust proxy', true);
 const path=require('path');
 const Q=require('q');
 const uuidV4 = require('uuid/v4');
 const moment = require('moment-timezone');
 const redis = require("redis");
-    var r_client = redis.createClient();
+var r_client = redis.createClient();
 const server = http.createServer(app);
 const wss = new WebSocket.Server({server
 //port: 8081,
@@ -317,95 +318,95 @@ function validateTopup(client){
 }
 function commandReader(js){
     const deferred=Q.defer();
-    const isValid=validateTopup(js.client);
-    if(!isValid.length)
-    switch (js.client.data.command) {
-        case 'send-sms':
-            console.log('send-sms');
-            sendsms(js).then(function(res){
-                deferred.resolve(res);
-            }).catch(function(err){
-                deferred.reject(err);
-            });
+    try {
+        switch (js.client.data.command) {
+            case 'send-sms':
+                console.log('send-sms');
+                sendsms(js).then(function(res){
+                    deferred.resolve(res);
+                }).catch(function(err){
+                    deferred.reject(err);
+                });
+                break;
+            case 'topup':
+                topup(js).then(function(res){
+                    deferred.resolve(res);
+                }).catch(function(err){
+                    deferred.reject(err);
+                });
+                //topup(js.client.data.topup.topupvalue,js.client.data.topup.phone,js.resp,js.client.data.topup.username,js.client.data.topup.target);
+                break;
+            case 'payment-postpaid':
+                paymentPOSTPAID(js).then(function(res){
+                    deferred.resolve(res);
+                }).catch(function(err){
+                    deferred.reject(err);
+                });
+                break;
+            case 'payment-internet':
+                paymentInternet(js).then(function(res){
+                    deferred.resolve(res);
+                }).catch(function(err){
+                    deferred.reject(err);
+                });
+                break;
+            case 'payment-PSTN':
+            paymentPSTN(js).then(function(res){
+                    deferred.resolve(res);
+                }).catch(function(err){
+                    deferred.reject(err);
+                });
+                break;
+            case 'check-center-balance':
+                checkCenterBalance(js).then(function(res){
+                    deferred.resolve(res);
+                }).catch(function(err){
+                    deferred.reject(err);
+                });
+                //checkCenterBalance(js.resp);
+                break;
+            case 'check-balance':
+                checkPhoneBalance(js).then(function(res){
+                    deferred.resolve(res);
+                }).catch(function(err){
+                    deferred.reject(err);
+                });
+               // checkPhoneBalance(js.client.data.topup.phone,js.client.data.topup.target,js.client.data.topup.username,js.resp);
+                break;
+            case 'check-post-balance':
+                checkPostPaid(js).then(function(res){
+                    deferred.resolve(res);
+                }).catch(function(err){
+                    deferred.reject(err);
+                });
+                //checkPostPaid(js.client.data.topup.phone,js.client.data.topup.target,js.client.data.topup.username,js.resp);
+                break;
+            case 'check-PSTN-balance':
+                checkPSTN(js).then(function(res){
+                    deferred.resolve(res);
+                }).catch(function(err){
+                    deferred.reject(err);
+                });
+                //checkPSTN(js.client.data.topup.phone,js.client.data.topup.target,js.client.data.topup.username,js.resp);
+                break;
+            case 'check-internet-balance':
+                checkInternet(js).then(function(res){
+                    deferred.resolve(res);
+                }).catch(function(err){
+                    deferred.reject(err);
+                });
+                //checkInternet(js.client.data.topup.phone,js.client.data.topup.target,js.client.data.topup.username,js.resp);
+                break;
+            case 'topup-history':
+                break;
+            default :
+                deferred.reject('ERROR NO COMMAND');
             break;
-        case 'topup':
-            topup(js).then(function(res){
-                deferred.resolve(res);
-            }).catch(function(err){
-                deferred.reject(err);
-            });
-            //topup(js.client.data.topup.topupvalue,js.client.data.topup.phone,js.resp,js.client.data.topup.username,js.client.data.topup.target);
-            break;
-        case 'payment-postpaid':
-            paymentPOSTPAID(js).then(function(res){
-                deferred.resolve(res);
-            }).catch(function(err){
-                deferred.reject(err);
-            });
-            break;
-        case 'payment-internet':
-            paymentInternet(js).then(function(res){
-                deferred.resolve(res);
-            }).catch(function(err){
-                deferred.reject(err);
-            });
-            break;
-        case 'payment-PSTN':
-        paymentPSTN(js).then(function(res){
-                deferred.resolve(res);
-            }).catch(function(err){
-                deferred.reject(err);
-            });
-            break;
-        case 'check-center-balance':
-            checkCenterBalance(js).then(function(res){
-                deferred.resolve(res);
-            }).catch(function(err){
-                deferred.reject(err);
-            });
-            //checkCenterBalance(js.resp);
-            break;
-        case 'check-balance':
-            checkPhoneBalance(js).then(function(res){
-                deferred.resolve(res);
-            }).catch(function(err){
-                deferred.reject(err);
-            });
-           // checkPhoneBalance(js.client.data.topup.phone,js.client.data.topup.target,js.client.data.topup.username,js.resp);
-            break;
-        case 'check-post-balance':
-            checkPostPaid(js).then(function(res){
-                deferred.resolve(res);
-            }).catch(function(err){
-                deferred.reject(err);
-            });
-            //checkPostPaid(js.client.data.topup.phone,js.client.data.topup.target,js.client.data.topup.username,js.resp);
-            break;
-        case 'check-PSTN-balance':
-            checkPSTN(js).then(function(res){
-                deferred.resolve(res);
-            }).catch(function(err){
-                deferred.reject(err);
-            });
-            //checkPSTN(js.client.data.topup.phone,js.client.data.topup.target,js.client.data.topup.username,js.resp);
-            break;
-        case 'check-internet-balance':
-            checkInternet(js).then(function(res){
-                deferred.resolve(res);
-            }).catch(function(err){
-                deferred.reject(err);
-            });
-            //checkInternet(js.client.data.topup.phone,js.client.data.topup.target,js.client.data.topup.username,js.resp);
-            break;
-        case 'topup-history':
-            break;
-        default :
-            deferred.reject('ERROR NO COMMAND');
-        break;
+        }
+    } catch (error) {
+        deferred.reject(error);
     }
-    else{
-        deferred.reject(isValid);
-    }
+
     return deferred.promise;
 }
 app.all('/',function(req,res){
@@ -426,7 +427,7 @@ wss.on('connection', function connection(ws, req) {
         js.ws=ws;
         ws.client=js.client;
         console.log(data);
-        if(_system_prefix.indexOf(js.client.system)<0){
+        if(_system_prefix.indexOf(js.client.prefix)<0){
             ws.terminate();
             console.log('wrong system , terminated');
             return;
