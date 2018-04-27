@@ -455,7 +455,9 @@ wss.on('connection', function connection(ws, req) {
                 // if(res.client.data.command=="system-prefix")
                 //         ws.send(JSON.stringify(res));
                 // else              
-                    ws.send(JSON.stringify(res.client));
+                console.log('return');
+                console.log(res.client);
+                ws.send(JSON.stringify(res.client));
             //}, 500);
         }).catch(err=>{
             js=err;
