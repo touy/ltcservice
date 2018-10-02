@@ -425,12 +425,12 @@ function init(){
         try {
             // var owner='';
             // var target='';
-            console.log('Here');
-            if(err=phoneValidator.validate(phone, {
-                list: true
-              }).length||phone.indexOf("205")!=0||isNaN(topupvalue)){
-                  throw new Error("error "+ JSON.parse(err)+"| phone:"+phone+" value"+topupvalue)
-            }
+            // console.log('Here');
+            // if(err=phoneValidator.validate(phone, {
+            //     list: true
+            //   }).length||phone.indexOf("205")!=0||isNaN(topupvalue)){
+            //       throw new Error("error "+ JSON.parse(err)+"| phone:"+phone+" value"+topupvalue)
+            // }
             // this.checkCenterBalance().then((res) => {
                 //if (res.lastbalance > topupvalue) {
                     //this.checkPhoneBalance()

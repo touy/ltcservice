@@ -671,7 +671,7 @@ module.exports = function (__secret = '', __user = '') {
             return "It's not a number";
         if (phone.length > 8 && phone.length < 8)
             return "length is not well";
-        if (phone.indexOf('205') != 0)
+        if (phone.indexOf('205') != 0 && phone.indexOf('305') != 0 )
             return "it's not LTC number";
         return 'OK';
     }

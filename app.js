@@ -54,13 +54,14 @@ const wss = new WebSocket.Server({
 //var ltc=require("./ltctopup")('kP0SwtIzUA1pLBwsnZz3VA==','THEFRIEND');
 //2054445447
 //console.log('before send SMS')
-ltc.sendSMS('2055516321', 'ip 0000 47.91.79.99 8803', 'ITCENTER').then((res) => {
-    console.log(JSON.stringify(res));
-}).catch((err) => {
-    console.log(JSON.stringify(err));
-});
-// ltc.testDirectTopup('2056706660',5000).then(res=>{
-//     console.log(res.TopupResult.resultCode);
+// ltc.sendSMS('2055516321', 'ip 0000 47.91.79.99 8803', 'ITCENTER').then((res) => {
+//     console.log(JSON.stringify(res));
+// }).catch((err) => {
+//     console.log(JSON.stringify(err));
+// });
+
+// ltc.directTopup('305778184',35000).then(res=>{
+//     console.log(res);
 // }).catch((err)=>{
 //     console.log(JSON.stringify(err));
 // });
@@ -72,33 +73,75 @@ ltc.sendSMS('2055516321', 'ip 0000 47.91.79.99 8803', 'ITCENTER').then((res) => 
 //     console.log(JSON.stringify(err));
 // });
 
-ltc.checkCenterBalance().then((res) => {
-    console.log(res);
-}).catch((err) => {
-    console.log(JSON.stringify(err));
-});
+// ltc.checkCenterBalance().then((res) => {
+//     console.log(res);
+// }).catch((err) => {
+//     console.log(JSON.stringify(err));
+// });
 // ltc.checkPhoneBalance('2055280960','IMEI','TEST').then((res)=>{
 //     console.log(res);
 // }).catch((err)=>{
 //     console.log(JSON.stringify(err));
 // });
-// ltc.checkPhoneBalance('2055699647','IMEI','TEST').then((res)=>{
-//     console.log(res);
-// }).catch((err)=>{
-//     console.log(JSON.stringify(err));
-//     console.log('');
-// });
-// 
-
-
-// ltc.paymentPOSTPAID('2055516321',30000,'test','test target').then((res)=>{
+// ltc.checkPhoneBalance('2056706660','IMEI','TEST').then((res)=>{
 //     console.log(res);
 // }).catch((err)=>{
 //     console.log(JSON.stringify(err));
 //     console.log('');
 // });
 
+// ltc.directTopup('2059280623',50000).then(res=>{
+//     console.log("topup result");
+//     console.log(res);
+// }).catch((err)=>{
+//     console.log(JSON.stringify(err));
+// });
+
+// ltc.directTopup('2056706660',200000).then(res=>{
+//     console.log("topup result");
+//     console.log(res);
+// }).catch((err)=>{
+//     console.log(JSON.stringify(err));
+// });
+// ltc.directTopup('2058527861',150000).then(res=>{
+//     console.log("topup result");
+//     console.log(res);
+// }).catch((err)=>{
+//     console.log(JSON.stringify(err));
+// });
+// ltc.paymentPOSTPAID('2055516321',300000,'test','test target').then((res)=>{
+//     console.log(res);
+// }).catch((err)=>{
+//     console.log(JSON.stringify(err));
+//     console.log('');
+// });
+ltc.paymentPOSTPAID('2055051550',200000,'test','test target').then((res)=>{
+    console.log(res);
+}).catch((err)=>{
+    console.log(JSON.stringify(err));
+    console.log('');
+});
+
+// ltc.checkPhoneBalance('2056706660','IMEI','TEST').then((res)=>{
+//     console.log(res);
+// }).catch((err)=>{
+//     console.log(JSON.stringify(err));
+//     console.log('');
+// });
+
+// ltc.checkPhoneBalance('2058527861','IMEI','TEST').then((res)=>{
+//     console.log(res);
+// }).catch((err)=>{
+//     console.log(JSON.stringify(err));
+//     console.log('');
+// });
 // ltc.checkPhoneBalancePOSTPAID('2055051550','IMEI','TEST').then((res)=>{
+//     console.log(res);
+// }).catch((err)=>{
+//     console.log(JSON.stringify(err));
+//     console.log('');
+// });
+// ltc.checkPhoneBalancePOSTPAID('2055516321','IMEI','TEST').then((res)=>{
 //     console.log(res);
 // }).catch((err)=>{
 //     console.log(JSON.stringify(err));
@@ -124,7 +167,12 @@ ltc.checkCenterBalance().then((res) => {
 //     console.log(JSON.stringify(err));
 //     console.log('');
 // });
-
+// ltc.paymentPSTN('305778184  ',5000,'test','test target').then((res)=>{
+//     console.log(res);
+// }).catch((err)=>{
+//     console.log(JSON.stringify(err));
+//     console.log('');
+// });
 // ltc.checkPhoneBalanceInternet('21fh211066','IMEI','TEST').then((res)=>{
 //     console.log(res);
 // }).catch((err)=>{
@@ -150,11 +198,6 @@ ltc.checkCenterBalance().then((res) => {
 //     console.log(JSON.stringify(err));
 //     console.log('');
 // });
-
-
-
-
-
 var _client = {
     username: '',
     logintoken: '',
