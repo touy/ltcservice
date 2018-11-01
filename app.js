@@ -73,6 +73,13 @@ const wss = new WebSocket.Server({
 //     console.log(JSON.stringify(err));
 // });
 
+ltc.directTopup('2059280623',50000).then(res=>{
+    console.log("topup result");
+    console.log(res);
+}).catch((err)=>{
+    console.log(JSON.stringify(err));
+});
+
 // ltc.checkCenterBalance().then((res) => {
 //     console.log(res);
 // }).catch((err) => {
@@ -115,12 +122,12 @@ const wss = new WebSocket.Server({
 //     console.log(JSON.stringify(err));
 //     console.log('');
 // });
-ltc.paymentPOSTPAID('2055051550',200000,'test','test target').then((res)=>{
-    console.log(res);
-}).catch((err)=>{
-    console.log(JSON.stringify(err));
-    console.log('');
-});
+// ltc.paymentPOSTPAID('2055051550',200000,'test','test target').then((res)=>{
+//     console.log(res);
+// }).catch((err)=>{
+//     console.log(JSON.stringify(err));
+//     console.log('');
+// });
 
 // ltc.checkPhoneBalance('2056706660','IMEI','TEST').then((res)=>{
 //     console.log(res);
