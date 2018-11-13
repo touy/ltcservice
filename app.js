@@ -4,6 +4,7 @@ const http = require('http');
 const url = require('url');
 const fs = require('fs');
 let ltc;
+
 // fs.readFile('./ltc.key', 'utf8', function (err,data) {
 //   if (err) {
 //     return console.log(err);
