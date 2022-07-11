@@ -24,8 +24,8 @@ const path = require('path');
 const Q = require('q');
 const uuidV4 = require('uuid/v4');
 const moment = require('moment-timezone');
-const redis = require("redis");
-var r_client = redis.createClient();
+// const redis = require("redis");
+// var r_client = redis.createClient();
 const server = http.createServer(app);
 const wss = new WebSocket.Server({
     server
@@ -632,6 +632,6 @@ function errorLogging(log) {
         }
     });
 }
-server.listen(8081, function listening() {
+server.listen(process.env.PORT, function listening() {
     console.log('Listening on %d', server.address().port);
 });

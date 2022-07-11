@@ -9,6 +9,7 @@ services:
     environment:
       - DATABASE_HOST=host.docker.internal
       - NODE_ENV=development
+      - PORT=28081
     ports:
       - 28081:28081
     volumes:

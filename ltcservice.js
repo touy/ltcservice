@@ -5,7 +5,7 @@ module.exports = function (__secret = '', __user = '', __minvalue = 5000) {
     const fs = require('fs');
     var redis = require("redis");
     var bluebird = require('bluebird');
-    r_client = redis.createClient();
+    // r_client = redis.createClient();
     bluebird.promisifyAll(redis.RedisClient.prototype);
     bluebird.promisifyAll(redis.Multi.prototype);
     var moment = require('moment-timezone');
