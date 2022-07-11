@@ -1,0 +1,21 @@
+version: "3.7"
+services:
+  ltcservice:
+    build: . 
+    restart: on-failure:5
+    container_name: ltcservice
+    # image: touyara/orderbillingapi:v1
+    # command: npm start
+    environment:
+      - DATABASE_HOST=host.docker.internal
+      - NODE_ENV=development
+    ports:
+      - 28081:28081
+    volumes:
+      - .:/app
+      - ./package.json:/app/package.json
+      - ./package-lock.json:/app/package-lock.json
+      - back-notused:/opt/app/node_modules
+volumes:
+  back-notused:
+  db-data:
