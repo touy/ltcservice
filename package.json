@@ -16,10 +16,10 @@
     "jquery": "^3.2.1",
     "method-override": "^2.3.10",
     "moment-timezone": "^0.5.14",
-    "nano-promises": "^1.2.0",
-    "nano-promise": "^1.2.0",
     "multer": "^1.3.0",
     "nano": "^6.4.2",
+    "nano-promise": "^1.2.0",
+    "nano-promises": "^1.2.0",
     "nano-records": "^1.1.2",
     "node-couchdb": "^1.2.0",
     "password-validator": "^4.0.0",
@@ -30,9 +30,8 @@
     "soap": "^0.21.0",
     "strong-soap": "^1.2.6",
     "uuid": "^3.1.0",
-    "ws": "^5.0.0"
+    "ws": "^5.2.3"
   },
-  "devDependencies": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/touy/ltcservice.git"
