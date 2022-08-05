@@ -1,0 +1,8 @@
+user_id : DOKBUAKHAM
+
+privateKey : qXYnnPzDddZ/HvtATXwm3NveKWbTYBp/gFQJvR3Jg3Y=
+headerSMS : TEST
+
+Testing : http://ltcservice.laotel.com:5577/Services.asmx?WSDL
+
+Production : http://ltcservice.laotel.com:7720/Services.asmx?WSDL
